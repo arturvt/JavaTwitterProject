@@ -11,13 +11,14 @@ public class Main {
 		 
 //		 Util.getWordsSet();
 		 
-		 TwitterActions.querySearch("UFC");
-		 TwitterActions.querySearch("#UFCNOCOMBATE");
+//		 TwitterActions.querySearch("UFC");
+//		 TwitterActions.querySearch("#UFCNOCOMBATE");
 		 
 		 
-		 Util.saveInTXT("UFC", TwitterActions.querySearch("UFC"));
-		 Util.saveInTXT("Jacare", TwitterActions.querySearch("Jacare"));
-		 Util.saveInTXT("UfcNoCombate", TwitterActions.querySearch("#ufcnocombate"));
+//		 Util.saveInTXT("UFC", TwitterActions.querySearch("UFC"));
+//		 Util.saveInTXT("Jacare", TwitterActions.querySearch("Jacare"));
+//		 Util.saveInTXT("UfcNoCombate", TwitterActions.querySearch("#ufcnocombate"));
+		 Util.saveInTXT("faustao", TwitterActions.querySearch("faustao"));
 		 		 
 		 
 		 

@@ -20,6 +20,7 @@ public class Util {
 	
 	private final static String TXT_FILE_NAME = "storedToken.txt";
 	private final static String TXT_WORDS_FILE_NAME = "words.txt";
+	private final static String FOLDER_TXT = "txtFiles";
 	public static Configuration conf = null;
 	
 	static {
@@ -34,11 +35,11 @@ public class Util {
 	
 	
 	public static List<String> getWordsSet() {
-		File file = new File(TXT_WORDS_FILE_NAME);
+		File file = new File(FOLDER_TXT+File.separator+TXT_WORDS_FILE_NAME);
 		if (file.exists()) {	
 			List<String> lines;
 			try {
-				lines = Files.readAllLines(Paths.get(TXT_WORDS_FILE_NAME), Charset.forName("UTF-8"));
+				lines = Files.readAllLines(Paths.get(FOLDER_TXT+File.separator+TXT_WORDS_FILE_NAME), Charset.forName("UTF-8"));
 				System.out.println("Gathering tweets with these words: ");
 				System.out.println(lines.toString());
 				for(String line:lines){
@@ -53,7 +54,7 @@ public class Util {
 	}
 	
 	public static void saveInTXT(String fileName, List<String> list) throws FileNotFoundException {
-		PrintWriter pw = new PrintWriter(new File(fileName));
+		PrintWriter pw = new PrintWriter(new File(FOLDER_TXT+File.separator+fileName));
 		for (String value:list) {
 			pw.println(value);	
 		}
@@ -62,7 +63,7 @@ public class Util {
 	
 	public static void storeAccessToken(long l, AccessToken accessToken) throws FileNotFoundException {
 		System.out.println("UseID: "+ l + " AccesToken:"+accessToken);
-		File file = new File(TXT_FILE_NAME);
+		File file = new File(FOLDER_TXT+File.separator+TXT_FILE_NAME);
 		
 		if (!file.exists()) {
 			PrintWriter out = new PrintWriter(file);
