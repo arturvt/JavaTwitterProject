@@ -35,7 +35,7 @@ public class Crawler {
 	
 	public static void liveStreamer() {
 		FilterQuery filter = new FilterQuery();
-		String tracks[] = {"SÃ£o Paulo", "SaoPaulo"};
+		String tracks[] = {"São Paulo", "SaoPaulo"};
         StatusListener listener = new StatusListener() {
             @Override
             public void onStatus(Status status) {
@@ -69,6 +69,6 @@ public class Crawler {
         };
         twitterStream.addListener(listener);
         twitterStream.filter(new FilterQuery());
-//        twitterStream.sample();
+        twitterStream.sample();
 	}
 }
