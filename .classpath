@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="twitter4j-3.0.3/lib/twitter4j-media-support-3.0.3.jar"/>
 	<classpathentry kind="lib" path="twitter4j-3.0.3/lib/twitter4j-stream-3.0.3.jar"/>
 	<classpathentry kind="lib" path="libs/postgresql-9.2-1003.jdbc4.jar"/>
+	<classpathentry kind="lib" path="libs/SentiStrength.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
