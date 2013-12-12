@@ -1,5 +1,6 @@
 package sentiment;
 
+import java.awt.List;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -166,7 +167,8 @@ public class SWN {
 		
 	}
 	
-	private static void classifyFilesFromFolder(String folderLocation) {
+	private static ArrayList<String> classifyFilesFromFolder(String folderLocation) {
+		ArrayList<String> list = new ArrayList<String>();
 		File folder = new File(folderLocation);
 		if (folder.isDirectory()) {
 			File[] files = folder.listFiles();
@@ -176,7 +178,7 @@ public class SWN {
 					for (TxtClassified line:lines) {
 						try {
 							detectSentiment(line);
-							System.out.println(line.getClassification());
+							list.add(line.getClassification());
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -186,13 +188,40 @@ public class SWN {
 				}
 			}
 		}
+		return list;
 	}
 
+	private static void classify(ArrayList<String> list) {
+		int total = list.size();
+		int pos = 0;
+		int neg = 0;
+		int neu = 0;
+		
+		for (String v:list) {
+			if (v.equals("none") || v.equals("weak_negative") || v.equals("weak_positive")) {
+				neu++;
+			} else if (v.equals("strong_positive"))  {
+				pos++;
+			} else if (v.equals("strong_negative")) {
+				neg++;
+			}
+		}
+		System.out.println("Total:"+total);
+		System.out.println("Positive:"+pos);
+		System.out.println("Total:"+neu);
+		System.out.println("Negative:"+neg);
+	}
+	
 	public static void main(String[] args) {
 
 		String folderLocation = "C:\\Users\\avt\\Dropbox\\Mestrado\\workspace\\TweetResults\\ENCONTRO COM FATIMA BERNARDES\\English\\";
 //		String sentence = "Tony Ramos at #MaisVoce an unrivaled sympathy";
-		classifyFilesFromFolder(folderLocation);
+		long initial = System.currentTimeMillis();
+		ArrayList<String> list = classifyFilesFromFolder(folderLocation);
+		long total = System.currentTimeMillis() - initial;
+		total /=1000;
+		classify(list);
+		System.out.println("TotalTime: "+total);
 //		TxtClassified txtClassified = new TxtClassified(sentence);
 //		try {
 //			detectSentiment(txtClassified);
