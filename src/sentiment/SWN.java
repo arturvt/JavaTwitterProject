@@ -1,7 +1,9 @@
 package sentiment;
 
+import java.awt.List;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,12 +12,12 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
 
-public class SWNManager {
+public class SWN {
 	private String pathToSWN = "D:\\Artur\\ProjetoMestrado\\SentiWord\\home\\swn\\www\\admin\\dump"
 			+ File.separator + "SentiWordNet_3.0.0_20130122.txt";
 	private HashMap<String, Double> _dict;
 
-	public SWNManager() throws IOException {
+	public SWN() throws IOException {
 
 		_dict = new HashMap<String, Double>();
 		HashMap<String, Vector<Double>> _temp = new HashMap<String, Vector<Double>>();
@@ -25,7 +27,8 @@ public class SWNManager {
 			while ((line = csv.readLine()) != null) {
 				if (!line.startsWith("#")) {
 					String[] data = line.split("\t");
-					Double score = Double.parseDouble(data[2])- Double.parseDouble(data[3]);
+					Double score = Double.parseDouble(data[2])
+							- Double.parseDouble(data[3]);
 					String[] words = data[4].split(" ");
 					for (String w : words) {
 						String[] w_n = w.split("#");
@@ -94,7 +97,7 @@ public class SWNManager {
 	}
 	
 	private static void detectSentiment(TxtClassified sentence) throws IOException {
-		SWNManager test = new SWNManager();
+		SWN test = new SWN();
 		String[] words = sentence.getText().split("\\s+");
 		double totalScore = 0;
 		for (String word : words) {
@@ -160,25 +163,7 @@ public class SWNManager {
 	int none = 0;
 	int positive = 0;
 	int strong_positive = 0;
-	
-//	private void metrics() {
-//		
-//	}
-	
-	public void classificarTweets(ArrayList<String> tweets) {
-		ArrayList<TxtClassified> arrayTXTClassified = new ArrayList<TxtClassified>();
-		for (String t:tweets) {
-			TxtClassified classified = new TxtClassified(t);
-			try {
-				detectSentiment(classified);
-				arrayTXTClassified.add(classified);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		classify(arrayTXTClassified);
-		
+	private void metrics() {
 		
 	}
 	
@@ -206,23 +191,24 @@ public class SWNManager {
 		return list;
 	}
 
-	public static void classify(ArrayList<TxtClassified> list) {
+	private static void classify(ArrayList<String> list) {
+		int total = list.size();
 		int pos = 0;
 		int neg = 0;
 		int neu = 0;
 		
-		for (TxtClassified v:list) {
-			if (v.getClassification().equals("strong_positive"))  {
-				pos++;
-			} else if (v.getClassification().equals("strong_negative")) {
-				neg++;
-			} else {
+		for (String v:list) {
+			if (v.equals("none") || v.equals("weak_negative") || v.equals("weak_positive")) {
 				neu++;
+			} else if (v.equals("strong_positive"))  {
+				pos++;
+			} else if (v.equals("strong_negative")) {
+				neg++;
 			}
 		}
-		System.out.println("Sum of all:"+(pos+neu+neg));
+		System.out.println("Total:"+total);
 		System.out.println("Positive:"+pos);
-		System.out.println("Neutral:"+neu);
+		System.out.println("Total:"+neu);
 		System.out.println("Negative:"+neg);
 	}
 	
@@ -234,8 +220,8 @@ public class SWNManager {
 		ArrayList<String> list = classifyFilesFromFolder(folderLocation);
 		long total = System.currentTimeMillis() - initial;
 		total /=1000;
-	//	classify(list);
-//		System.out.println("TotalTime: "+total);
+		classify(list);
+		System.out.println("TotalTime: "+total);
 //		TxtClassified txtClassified = new TxtClassified(sentence);
 //		try {
 //			detectSentiment(txtClassified);

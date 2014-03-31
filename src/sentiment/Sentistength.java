@@ -2,27 +2,18 @@ package sentiment;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import extra.Util;
 import uk.ac.wlv.sentistrength.*;
 
-public class SentistengthManager {
-	
-	private SentiStrength sentiStrength = new SentiStrength();
-	private String ssthInitialisation[] = { "sentidata", "c:/SentStrength_Data/" };
-	
-	
-	
-	public SentistengthManager() {
-		this.sentiStrength.initialise(ssthInitialisation); // Initialise	
-	}
+public class Sentistength {
 
 	private static ArrayList<Integer> result = new ArrayList<Integer>();
 
 	private static void calculator(ArrayList<Integer> result) {
 
+		int total = result.size();
 		int pos = 0;
 		int neg = 0;
 		int neu = 0;
@@ -36,22 +27,12 @@ public class SentistengthManager {
 				neu++;
 		}
 
-		System.out.println("Sum of all: " + (pos + neu + neg));
+		System.out.println("Total: " + total);
 		System.out.println("Positive: " + pos);
 		System.out.println("Neutral: " + neu);
 		System.out.println("Negative: " + neg);
 	}
-	
-	public void computarSentimentos(ArrayList<String> tweets) {
-		ArrayList<Integer> resultados = new ArrayList<Integer>();
-		for (String text : tweets) {
-			String sentiment = this.sentiStrength.computeSentimentScores(text);
-			resultados.add(Util.classificateSentiment(sentiment));
-		}
-		calculator(resultados);
-	}
 
-	
 	private static ArrayList<String> classifyFilesFromFolder(String folderLocation) {
 		SentiStrength sentiStrength = new SentiStrength();
 		String ssthInitialisation[] = { "sentidata", "c:/SentStrength_Data/" };
